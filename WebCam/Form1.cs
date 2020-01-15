@@ -1,4 +1,5 @@
-﻿using AForge.Video.DirectShow;
+﻿using AForge.Video;
+using AForge.Video.DirectShow;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -39,7 +40,7 @@ namespace WebCam
                 HayDispositivos = true;
                 for (int i = 0; i < MisDispositivos.Count; i++)
                     comboBox1.Items.Add(MisDispositivos[i].Name.ToString());
-                comboBox1.Text = MisDispositivos[0].ToString();
+                comboBox1.Text = MisDispositivos[0].Name.ToString();
 
             }
             else
@@ -47,6 +48,37 @@ namespace WebCam
                 HayDispositivos = false;
             }
 
+        }
+
+        private void CerrarWebCam()
+        {
+            if(MiWebCam!=null&& MiWebCam.IsRunning)
+            {
+                MiWebCam.SignalToStop();
+                MiWebCam = null;
+            }
+        }
+        private void btnGrabar_Click(object sender, EventArgs e)
+        {
+            CerrarWebCam();
+            int i = comboBox1.SelectedIndex;
+            string NombreVideo = MisDispositivos[i].MonikerString;
+            MiWebCam = new VideoCaptureDevice(NombreVideo);
+            MiWebCam.NewFrame += new NewFrameEventHandler(Capturando);
+            MiWebCam.Start();
+
+        }
+
+        private void Capturando(object sender, NewFrameEventArgs eventArgs)
+        {
+            Bitmap Image = (Bitmap)eventArgs.Frame.Clone();
+            pictureBox1.Image = Image;
+
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            CerrarWebCam();
         }
     }
 }
