@@ -27,6 +27,25 @@ namespace WebCam
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            CargaDispositivos();
+
+        }
+
+        public void CargaDispositivos()
+        {
+            MisDispositivos = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+            if(MisDispositivos.Count>0)
+            {
+                HayDispositivos = true;
+                for (int i = 0; i < MisDispositivos.Count; i++)
+                    comboBox1.Items.Add(MisDispositivos[i].Name.ToString());
+                comboBox1.Text = MisDispositivos[0].ToString();
+
+            }
+            else
+            {
+                HayDispositivos = false;
+            }
 
         }
     }
