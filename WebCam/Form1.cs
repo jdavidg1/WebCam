@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -79,6 +80,16 @@ namespace WebCam
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             CerrarWebCam();
+        }
+
+        private void btnCapturar_Click(object sender, EventArgs e)
+        {
+            if(MiWebCam !=null && MiWebCam.IsRunning)
+            {
+                pictureBox2.Image = pictureBox1.Image;
+                pictureBox2.Image.Save(Path + "juancho.jpg", ImageFormat.Jpeg);
+
+            }
         }
     }
 }

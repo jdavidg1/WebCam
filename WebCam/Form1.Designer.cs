@@ -61,6 +61,7 @@
             this.btnCapturar.TabIndex = 2;
             this.btnCapturar.Text = "Capturar";
             this.btnCapturar.UseVisualStyleBackColor = true;
+            this.btnCapturar.Click += new System.EventHandler(this.btnCapturar_Click);
             // 
             // btnGrabar
             // 
